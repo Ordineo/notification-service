@@ -28,3 +28,23 @@ eureka:
 ribbon:
   IsSecure: true
 ---
+logging:
+  level:
+    org.springframework.security: INFO
+spring:
+  profiles: cloud
+server:
+  port: ${PORT}
+eureka:
+  instance:
+    hostname: ${vcap.application.uris[0]}
+    metadataMap:
+      instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    non-secure-port: 80
+    non-secure-port-enabled: false
+    secure-port-enabled: true
+  client:
+    serviceUrl:
+      defaultZone: ${vcap.services.registry.credentials.url}
+    healthcheck:
+      enabled: true
