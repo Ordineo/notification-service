@@ -1,0 +1,7 @@
+${AnsiColor.BLACK}________            .___.__                      ___________           .__              ${AnsiColor.BLACK} _______          __  .__  _____.__               __  .__
+${AnsiColor.BLACK}\_____  \_______  __| _/|__| ____   ____  ____   \__    ___/___   ____ |  |              ${AnsiColor.BLACK}\      \   _____/  |_|__|/ ____\__| ____ _____ _/  |_|__| ____   ____
+${AnsiColor.BLACK} /   |   \_  __ \/ __ | |  |/    \_/ __ \/  _ \    |    | /  _ \ /  _ \|  |    ${AnsiColor.BRIGHT_WHITE} ______  ${AnsiColor.BLACK} /   |   \ /  _ \   __\  \   __\|  |/ ___\\__  \\   __\  |/  _ \ /    \
+${AnsiColor.BLACK}/    |    \  | \/ /_/ | |  |   |  \  ___(  <_> )   |    |(  <_> |  <_> )  |__  ${AnsiColor.BRIGHT_WHITE}/_____/  ${AnsiColor.BLACK}/    |    (  <_> )  | |  ||  |  |  \  \___ / __ \|  | |  (  <_> )   |  \
+${AnsiColor.BLACK}\_______  /__|  \____ | |__|___|  /\___  >____/    |____| \____/ \____/|____/          ${AnsiColor.BLACK} \____|__  /\____/|__| |__||__|  |__|\___  >____  /__| |__|\____/|___|  /
+${AnsiColor.BLACK}        \/           \/         \/     \/                                               ${AnsiColor.BLACK}        \/                              \/     \/                    \/
+                                                                          ${AnsiColor.BLUE}© Ordina 2016 - Ordineo - Notification

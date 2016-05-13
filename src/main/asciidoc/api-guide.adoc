@@ -1,0 +1,221 @@
+= RESTful Message API Guide
+Andy Wilkinson;
+:doctype: book
+:toc:
+:sectanchors:
+:sectlinks:
+:toclevels: 4
+:source-highlighter: highlightjs
+
+[[overview]]
+= Overview
+
+[[overview-http-verbs]]
+== HTTP verbs
+
+RESTful Message tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP verbs.
+
+|===
+| Verb | Usage
+
+| `GET`
+| Used to retrieve a resource
+
+| `POST`
+| Used to create a new resource
+
+| `PATCH` & `PUT`
+| Used to update an existing resource, including partial updates
+
+| `DELETE`
+| Used to delete an existing resource
+|===
+
+[[overview-http-status-codes]]
+== HTTP status codes
+
+RESTful notes tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP status codes.
+
+|===
+| Status code | Usage
+
+| `200 OK`
+| The request completed successfully
+
+| `201 Created`
+| A new resource has been created successfully. The resource's URI is available from the response's
+`Location` header
+
+| `204 No Content`
+| An update to an existing resource has been applied successfully
+
+| `400 Bad Request`
+| The request was malformed. The response body will include an error providing further information
+
+| `404 Not Found`
+| The requested resource did not exist
+|===
+
+[[overview-hypermedia]]
+== Hypermedia
+
+RESTful messages uses hypermedia and resources include links to other resources in their
+responses. Responses are in http://stateless.co/hal_specification.html[Hypertext Application
+Language (HAL)] format. Links can be found beneath the `_links` key. Users of the API should
+not created URIs themselves, instead they should use the above-described links to navigate
+from resource to resource.
+
+[[resources]]
+= Resources
+
+== Messages
+
+[[resources-messages-post]]
+=== Creating a Message
+
+A `POST` request is used to create a message
+
+==== Request fields
+
+include::{snippets}/post-message/request-fields.adoc[]
+
+==== Request structure
+
+include::{snippets}/post-message/http-request.adoc[]
+
+==== Example request
+
+include::{snippets}/post-message/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/post-message/http-response.adoc[]
+
+[[resources-message-post-bad-request]]
+=== Posting a Message with a null value: 400 BAD REQUEST
+
+A `POST` used to create the Message with a null value will return a 400 BAD REQUEST
+
+==== Request fields
+
+include::{snippets}/post-message/request-fields.adoc[]
+
+==== Request structure
+
+include::{snippets}/post-message-without-message-should-return-bad-request/http-request.adoc[]
+
+==== Example request
+
+include::{snippets}/post-message-without-message-should-return-bad-request/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/post-message-without-message-should-return-bad-request/http-response.adoc[]
+
+[[resources-message-update]]
+=== Updating a Message
+
+A `PUT` request is used to update a message
+
+==== Request fields
+
+include::{snippets}/post-message/request-fields.adoc[]
+
+==== Request structure
+
+include::{snippets}/update-message/http-request.adoc[]
+
+==== Example request
+
+include::{snippets}/update-message/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/update-message/http-response.adoc[]
+
+[[resources-message-update-bad-request]]
+=== Updating a Message with a null value: 400 BAD REQUEST
+
+A `PUT` used to update the Message with a null value will return a 400 BAD REQUEST
+
+==== Request fields
+
+include::{snippets}/post-Message/request-fields.adoc[]
+
+==== Request structure
+
+include::{snippets}/update-Message-with-null-value-should-return-bad-request/http-request.adoc[]
+
+==== Example request
+
+include::{snippets}/update-Message-with-null-value-should-return-bad-request/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/update-Message-with-null-value-should-return-bad-request/http-response.adoc[]
+
+[[resources-message-get]]
+=== Requesting a Message
+
+A `GET` request is used to get a Message
+
+===== Response fields
+include::{snippets}/get-existing-message/response-fields.adoc[]
+
+===== Request structure
+include::{snippets}/get-existing-message/http-request.adoc[]
+
+===== Example request
+include::{snippets}/get-existing-message/curl-request.adoc[]
+
+===== Example response
+include::{snippets}/get-existing-message/http-response.adoc[]
+
+[[resources-messages-by-subscriber]]
+=== Listing Messages by subscriber
+
+A `GET` request is used to get a list of Messages for a given user ordered by end/due date
+
+==== Response fields
+
+include::{snippets}/get-existing-message-by-subscriber/response-fields.adoc[]
+
+==== Request structure
+
+include::{snippets}/get-existing-message-by-subscriber/http-request.adoc[]
+
+==== Example request
+
+include::{snippets}/get-existing-message-by-subscriber/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/get-existing-message-by-subscriber/http-response.adoc[]
+
+[[resources-non-existant-message-return-not-found]]
+=== Getting a non-existant message will return not found
+
+A `GET` used to get a non-existant Message will return a 404 NOT FOUND
+
+==== Response fields
+
+include::{snippets}/get-existing-message/response-fields.adoc[]
+
+==== Request structure
+
+include::{snippets}/get-non-existing-message-should-return-not-found/http-request.adoc[]
+
+==== Example request
+
+include::{snippets}/get-non-existing-message-should-return-not-found/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/get-non-existing-message-should-return-not-found/http-response.adoc[]
+
+
+
+
+

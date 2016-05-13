@@ -1,0 +1,30 @@
+server:
+  port: ${PORT:1199}
+spring:
+  jackson:
+    serialization:
+      WRITE_CHAR_ARRAYS_AS_JSON_ARRAYS: false
+  data:
+    rest:
+      basePath: /api
+      defaultMediaType: application/hal+json
+      returnBodyOnUpdate: false
+      returnBodyOnCreate: false
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+---
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone:  https://eureka-ordineo.cfapps.io/eureka/ #http://localhost:8761/eureka/
+  instance:
+    secure-port-enabled: true
+    secure-port: ${server.port}
+    non-secure-port-enabled: false
+ribbon:
+  IsSecure: true
+---
