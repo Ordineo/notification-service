@@ -13,5 +13,7 @@ public interface MessageView {
 
     String getSubscriber();
 
+    String getMessageType();
+
     boolean getRead();
 }

@@ -31,6 +31,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -80,12 +81,16 @@ public class MessageIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.subscriber", is("PhDa")))
                 .andExpect(jsonPath("$.message", is("New message")))
+                .andExpect(jsonPath("$.messageType", is("milestone")))
+                .andExpect(jsonPath("$.messageDateTime", is("2011-12-03T10:15:30")))
                 .andExpect(jsonPath("$.read", is(false)))
                 .andExpect(jsonPath("$._links.self.href", endsWith("/messages/1")))
                 .andExpect(jsonPath("$._links.message.href", endsWith("/messages/1{?projection}")))
                 .andDo(document("{method-name}", responseFields(
                         fieldWithPath("subscriber").description("The messages's subscriber"),
                         fieldWithPath("message").description("The actual message"),
+                        fieldWithPath("messageType").description("The type of message"),
+                        fieldWithPath("messageDateTime").description("The datetime the message was created"),
                         fieldWithPath("read").description("Whether or not the message has been read."),
                         fieldWithPath("_links").description("links to resources")
                 )));
@@ -99,6 +104,7 @@ public class MessageIntegrationTest {
                 .andExpect(jsonPath("$._embedded.messages",hasSize(2)))
                 .andExpect(jsonPath("$._embedded.messages[0].subscriber", is("PhDa")))
                 .andExpect(jsonPath("$._embedded.messages[0].message", is("New message")))
+                .andExpect(jsonPath("$._embedded.messages[0].messageType", is("milestone")))
                 .andExpect(jsonPath("$._embedded.messages[0].read", is(false)))
                 .andExpect(jsonPath("$._embedded.messages[0]._links.self.href", endsWith("/messages/1")))
                 .andExpect(jsonPath("$._embedded.messages[0]._links.message.href", endsWith("/messages/1{?projection}")))
@@ -106,6 +112,7 @@ public class MessageIntegrationTest {
                 .andDo(document("{method-name}", responseFields(
                         fieldWithPath("._embedded.messages[].subscriber").description("The messages's subscriber"),
                         fieldWithPath("._embedded.messages[].message").description("The actual message"),
+                        fieldWithPath("._embedded.messages[].messageType").description("The message's type"),
                         fieldWithPath("._embedded.messages[].read").description("Whether or not the message has been read."),
                         fieldWithPath("._embedded.messages[]._links").description("links to resources"),
                         fieldWithPath("._links").description("links to resources")
@@ -132,7 +139,8 @@ public class MessageIntegrationTest {
 
         String string = "{\n" +
                 "  \"message\": \"New Message\",\n" +
-                "  \"subscriber\": \"PhDa\"\n" +
+                "  \"subscriber\": \"PhDa\",\n" +
+                "  \"messageType\": \"milestone\"\n" +
                 "}";
 
         ConstrainedFields fields = new ConstrainedFields(Message.class);
@@ -142,6 +150,7 @@ public class MessageIntegrationTest {
                 .andExpect(status().isCreated())
                 .andDo(document("{method-name}", requestFields(
                         fields.withPath("subscriber").description("The message's subscriber"),
+                        fields.withPath("messageType").description("The message's type"),
                         fields.withPath("message").description("The actual message")
                 )))
                 .andReturn().getResponse().getHeader("Location");
@@ -183,7 +192,7 @@ public class MessageIntegrationTest {
         message.setMessage("New message");
         String string = objectWriter.writeValueAsString(message);
 
-        mockMvc.perform(put("/api/messages/" +message.getId()).content(string).contentType(MediaTypes.HAL_JSON)
+        mockMvc.perform(put("/api/messages/" +1).content(string).contentType(MediaTypes.HAL_JSON)
                 .header("Authorization", authToken))
                 .andExpect(status().isNoContent());
     }
