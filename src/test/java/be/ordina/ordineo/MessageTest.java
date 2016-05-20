@@ -46,12 +46,13 @@ public class MessageTest {
 
         message.setSubscriber("PhDa");
         message.setMessage("TestMessage");
+        message.setMessageType("milestone");
 
         return message;
     }
 
     @Test
-    public void validateObjective() {
+    public void validateMessage() {
         constraintViolations = localValidatorFactory
                 .validate(message);
         assertTrue(constraintViolations.stream().count() == 0);
@@ -68,6 +69,14 @@ public class MessageTest {
     @Test
     public  void messageIsNull(){
         message.setMessage(null);
+        constraintViolations = localValidatorFactory
+                .validate(message);
+        assertTrue(constraintViolations.stream().filter(m -> m.getMessage().equals("may not be null")).count() > 0);
+    }
+
+    @Test
+    public  void messageTypeIsNull(){
+        message.setMessageType(null);
         constraintViolations = localValidatorFactory
                 .validate(message);
         assertTrue(constraintViolations.stream().filter(m -> m.getMessage().equals("may not be null")).count() > 0);
